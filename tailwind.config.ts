@@ -84,11 +84,91 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'float': {
+					'0%, 100%': {
+						transform: 'translateY(0)'
+					},
+					'50%': {
+						transform: 'translateY(-20px)'
+					}
+				},
+				'pulse-glow': {
+					'0%, 100%': {
+						opacity: '1',
+						filter: 'brightness(1)'
+					},
+					'50%': {
+						opacity: '0.8',
+						filter: 'brightness(1.3) drop-shadow(0 0 15px hsl(var(--primary)))'
+					}
+				},
+				'rotate-slow': {
+					'0%': {
+						transform: 'rotate(0deg)'
+					},
+					'100%': {
+						transform: 'rotate(360deg)'
+					}
+				},
+				'glitch': {
+					'0%, 100%': {
+						transform: 'translate(0)'
+					},
+					'20%': {
+						transform: 'translate(-5px, 5px)'
+					},
+					'40%': {
+						transform: 'translate(-5px, -5px)'
+					},
+					'60%': {
+						transform: 'translate(5px, 5px)'
+					},
+					'80%': {
+						transform: 'translate(5px, -5px)'
+					}
+				},
+				'fade-in': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateY(10px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateY(0)'
+					}
+				},
+				'fade-in-delayed': {
+					'0%, 50%': {
+						opacity: '0',
+						transform: 'translateY(10px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateY(0)'
+					}
+				},
+				'scale-in': {
+					'0%': {
+						transform: 'scale(0.95)',
+						opacity: '0'
+					},
+					'100%': {
+						transform: 'scale(1)',
+						opacity: '1'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'float': 'float 6s ease-in-out infinite',
+				'pulse-glow': 'pulse-glow 4s ease-in-out infinite',
+				'rotate-slow': 'rotate-slow 20s linear infinite',
+				'glitch': 'glitch 0.5s ease-in-out infinite alternate',
+				'fade-in': 'fade-in 0.6s ease-out',
+				'fade-in-delayed': 'fade-in-delayed 1.2s ease-out',
+				'scale-in': 'scale-in 0.5s ease-out'
 			}
 		}
 	},
