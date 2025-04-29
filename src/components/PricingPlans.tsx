@@ -1,9 +1,8 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CheckIcon, XIcon } from "lucide-react";
 
-type PlanType = "monthly" | "yearly";
+type PlanType = "monthly" | "yearly" | "payu";
 
 const PricingPlans: React.FC = () => {
   const [planType, setPlanType] = useState<PlanType>("monthly");
@@ -12,8 +11,9 @@ const PricingPlans: React.FC = () => {
     {
       name: "Personal",
       description: "Perfect for individuals needing occasional privacy",
-      monthlyPrice: 9.99,
-      yearlyPrice: 99.99,
+      monthlyPrice: "X$",
+      yearlyPrice: "XX$",
+      payuPrice: "X$/use",
       features: [
         "1 temporary number at a time",
         "30 days number lifetime",
@@ -33,8 +33,9 @@ const PricingPlans: React.FC = () => {
     {
       name: "Business",
       description: "Ideal for professionals and small teams",
-      monthlyPrice: 24.99,
-      yearlyPrice: 249.99,
+      monthlyPrice: "XX$",
+      yearlyPrice: "XXX$",
+      payuPrice: "XX$/use",
       features: [
         "5 temporary numbers at a time",
         "90 days number lifetime",
@@ -57,6 +58,7 @@ const PricingPlans: React.FC = () => {
       description: "Advanced solutions for organizations with specific needs",
       monthlyPrice: null,
       yearlyPrice: null,
+      payuPrice: null,
       customPrice: "Contact Us",
       features: [
         "Unlimited temporary numbers",
@@ -89,7 +91,7 @@ const PricingPlans: React.FC = () => {
           <div className="mt-8 inline-flex items-center p-1 bg-secondary rounded-full">
             <button
               onClick={() => setPlanType("monthly")}
-              className={`py-2 px-6 rounded-full transition-all ${
+              className={`py-2 px-4 rounded-full transition-all ${
                 planType === "monthly"
                   ? "bg-primary text-white shadow-lg"
                   : "text-foreground/70 hover:text-foreground"
@@ -99,7 +101,7 @@ const PricingPlans: React.FC = () => {
             </button>
             <button
               onClick={() => setPlanType("yearly")}
-              className={`py-2 px-6 rounded-full transition-all ${
+              className={`py-2 px-4 rounded-full transition-all ${
                 planType === "yearly"
                   ? "bg-primary text-white shadow-lg"
                   : "text-foreground/70 hover:text-foreground"
@@ -109,6 +111,16 @@ const PricingPlans: React.FC = () => {
               <span className="ml-2 text-xs py-0.5 px-2 bg-accent text-white rounded-full">
                 Save 15%
               </span>
+            </button>
+            <button
+              onClick={() => setPlanType("payu")}
+              className={`py-2 px-4 rounded-full transition-all ${
+                planType === "payu"
+                  ? "bg-primary text-white shadow-lg"
+                  : "text-foreground/70 hover:text-foreground"
+              }`}
+            >
+              Pay as you go
             </button>
           </div>
         </div>
@@ -142,18 +154,24 @@ const PricingPlans: React.FC = () => {
                   ) : (
                     <>
                       <div className="text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                        ${planType === "monthly" ? plan.monthlyPrice : plan.yearlyPrice}
+                        {planType === "monthly" 
+                          ? plan.monthlyPrice 
+                          : planType === "yearly" 
+                            ? plan.yearlyPrice
+                            : plan.payuPrice}
                       </div>
                       <div className="text-foreground/60 text-sm">
-                        per {planType === "monthly" ? "month" : "year"}
+                        {planType === "monthly" ? "per month" : planType === "yearly" ? "per year" : "per usage"}
                       </div>
                     </>
                   )}
                 </div>
                 
-                <Button className={`mb-6 bg-gradient-to-r ${plan.gradient} hover:opacity-90`}>
-                  Get Started
-                </Button>
+                <Link to="/coming-soon">
+                  <Button className={`mb-6 w-full bg-gradient-to-r ${plan.gradient} hover:opacity-90`}>
+                    Coming Soon!
+                  </Button>
+                </Link>
                 
                 <div className="space-y-4 flex-grow">
                   <div className="font-medium">Includes:</div>
