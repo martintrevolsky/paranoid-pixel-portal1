@@ -1,8 +1,7 @@
-
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { InfoIcon, LogInIcon, UserPlusIcon, MenuIcon, XIcon } from "lucide-react";
+import { InfoIcon, MenuIcon, XIcon } from "lucide-react";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -74,14 +73,11 @@ const Navbar = () => {
             <InfoIcon size={16} />
             <span>Support</span>
           </Button>
-          <Button variant="outline" size="sm" className="flex items-center gap-1">
-            <LogInIcon size={16} />
-            <span>Login</span>
-          </Button>
-          <Button size="sm" className="flex items-center gap-1 animate-pulse-glow">
-            <UserPlusIcon size={16} />
-            <span>Sign Up</span>
-          </Button>
+          <Link to="/coming-soon">
+            <Button size="sm" className="animate-pulse-glow">
+              Coming Soon!
+            </Button>
+          </Link>
         </div>
       </div>
 
@@ -115,14 +111,11 @@ const Navbar = () => {
                 <InfoIcon size={16} className="mr-2" />
                 Support
               </Button>
-              <Button variant="outline" className="justify-start">
-                <LogInIcon size={16} className="mr-2" />
-                Login
-              </Button>
-              <Button className="justify-start">
-                <UserPlusIcon size={16} className="mr-2" />
-                Sign Up
-              </Button>
+              <Link to="/coming-soon" onClick={() => setIsMobileMenuOpen(false)}>
+                <Button className="justify-start w-full">
+                  Coming Soon!
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
