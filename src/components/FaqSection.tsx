@@ -1,75 +1,92 @@
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronDown } from 'lucide-react';
 
-import React from "react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+const faqs = [
+  {
+    question: "What is a non-VOIP number?",
+    answer: "A non-VOIP number is a traditional phone number that is not associated with internet-based calling services. These numbers are more reliable for verifications as they are not flagged by most services.",
+  },
+  {
+    question: "Can I use these numbers for verification?",
+    answer: "Yes, all our numbers are non-VOIP and can be used for verification purposes on various platforms including social media, banking, and other services.",
+  },
+  {
+    question: "How long does it take to get a number?",
+    answer: "Numbers are activated instantly after payment. You'll receive your number details immediately in your account dashboard.",
+  },
+  {
+    question: "What happens when my subscription ends?",
+    answer: "When your subscription ends, you'll need to renew to continue using the number. If you don't renew, the number will be released back to the pool.",
+  },
+  {
+    question: "Can I port my existing number?",
+    answer: "Currently, we don't support number porting. All numbers are provided by us and cannot be transferred from other providers.",
+  },
+];
 
-const FaqSection: React.FC = () => {
-  const faqItems = [
-    {
-      question: "How anonymous are these temporary numbers?",
-      answer:
-        "Our temporary numbers provide complete anonymity. We don't require personal information during signup, accept cryptocurrency payments, and maintain zero logs of your communication. Our infrastructure is designed with privacy as the foundation, not an afterthought."
-    },
-    {
-      question: "Can I receive SMS verification codes with these numbers?",
-      answer:
-        "Yes! Our temporary numbers fully support SMS verification codes from most services. This makes them perfect for creating accounts on platforms without revealing your actual phone number. However, some financial services may block temporary numbers as part of their security measures."
-    },
-    {
-      question: "What happens when my number expires?",
-      answer:
-        "When your temporary number expires, it's immediately removed from our system along with any associated data. The number returns to our pool and may be reassigned to another user. We don't store any call logs, messages, or other communication data after expiration."
-    },
-    {
-      question: "Can I extend the lifetime of my temporary number?",
-      answer:
-        "Yes, you can extend the lifetime of your temporary number before it expires through your account dashboard. This allows you to maintain the same number for longer periods if needed. Business and Custom plans offer longer initial lifetimes for numbers."
-    },
-    {
-      question: "Are there any usage limitations?",
-      answer:
-        "Usage limitations depend on your plan. The Personal plan has daily limits on calls and SMS. Business and Custom plans offer unlimited usage. All plans are subject to our fair use policy to prevent abuse."
-    },
-    {
-      question: "Is using a temporary phone number legal?",
-      answer:
-        "Using temporary phone numbers is completely legal for legitimate purposes. However, they should not be used for fraudulent activities, harassment, or any illegal actions. We cooperate with authorities in cases of reported illegal usage, though our limited data collection means we often have minimal information to provide."
-    }
-  ];
+export default function FaqSection() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const toggleFaq = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
 
   return (
-    <section className="py-20 relative">
+    <section className="py-20 relative overflow-hidden">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            Frequently Asked Questions
-          </h2>
-          <p className="text-lg text-foreground/80 max-w-2xl mx-auto">
-            Everything you need to know about our paranoid-level temporary phone numbers.
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl font-bold mb-4">Frequently Asked Questions</h2>
+          <p className="text-xl text-muted-foreground">
+            Find answers to common questions about our service
           </p>
-        </div>
+        </motion.div>
 
         <div className="max-w-3xl mx-auto">
-          <Accordion type="single" collapsible className="w-full">
-            {faqItems.map((item, index) => (
-              <AccordionItem key={index} value={`item-${index}`} className="border-b border-border/50">
-                <AccordionTrigger className="text-left text-lg font-medium py-4 hover:text-primary transition-colors">
-                  {item.question}
-                </AccordionTrigger>
-                <AccordionContent className="text-foreground/70 pb-4">
-                  {item.answer}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+          {faqs.map((faq, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="mb-4"
+            >
+              <button
+                onClick={() => toggleFaq(index)}
+                className="w-full p-6 text-left bg-card border border-border/50 rounded-lg hover:border-primary/50 transition-colors flex items-center justify-between"
+              >
+                <span className="text-lg font-medium">{faq.question}</span>
+                <motion.div
+                  animate={{ rotate: openIndex === index ? 180 : 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <ChevronDown className="w-5 h-5" />
+                </motion.div>
+              </button>
+              <AnimatePresence>
+                {openIndex === index && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="overflow-hidden"
+                  >
+                    <div className="p-6 bg-card/50 border border-border/50 rounded-b-lg">
+                      {faq.answer}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
   );
-};
-
-export default FaqSection;
+}

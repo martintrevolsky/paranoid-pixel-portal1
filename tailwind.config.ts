@@ -103,74 +103,80 @@ export default {
 						filter: 'brightness(1.3) drop-shadow(0 0 15px hsl(var(--primary)))'
 					}
 				},
-				'rotate-slow': {
-					'0%': {
-						transform: 'rotate(0deg)'
-					},
-					'100%': {
-						transform: 'rotate(360deg)'
-					}
+				'magnetic-move': {
+					'0%, 100%': { transform: 'translate(0px, 0px)' },
+					'50%': { transform: 'translate(var(--x, 0px), var(--y, 0px))' },
 				},
-				'glitch': {
+				'text-gradient': {
 					'0%, 100%': {
-						transform: 'translate(0)'
+						'background-size': '200% 200%',
+						'background-position': '0% 50%'
 					},
-					'20%': {
-						transform: 'translate(-5px, 5px)'
-					},
-					'40%': {
-						transform: 'translate(-5px, -5px)'
-					},
-					'60%': {
-						transform: 'translate(5px, 5px)'
-					},
-					'80%': {
-						transform: 'translate(5px, -5px)'
+					'50%': {
+						'background-size': '200% 200%',
+						'background-position': '100% 50%'
 					}
 				},
-				'fade-in': {
-					'0%': {
-						opacity: '0',
-						transform: 'translateY(10px)'
-					},
-					'100%': {
-						opacity: '1',
-						transform: 'translateY(0)'
-					}
+				'slow-spin': {
+					from: { transform: 'rotate(0deg)' },
+					to: { transform: 'rotate(360deg)' },
 				},
-				'fade-in-delayed': {
-					'0%, 50%': {
-						opacity: '0',
-						transform: 'translateY(10px)'
-					},
-					'100%': {
-						opacity: '1',
-						transform: 'translateY(0)'
-					}
+				'morph-shape': {
+					'0%, 100%': { 'border-radius': '60% 40% 30% 70%/60% 30% 70% 40%' },
+					'50%': { 'border-radius': '30% 60% 70% 40%/50% 60% 30% 60%' },
 				},
-				'scale-in': {
-					'0%': {
-						transform: 'scale(0.95)',
-						opacity: '0'
-					},
-					'100%': {
-						transform: 'scale(1)',
-						opacity: '1'
-					}
-				}
+				'noise-animation': {
+					'0%': { transform: 'translate(0, 0)' },
+					'10%': { transform: 'translate(-5%, -5%)' },
+					'20%': { transform: 'translate(-10%, 5%)' },
+					'30%': { transform: 'translate(5%, -10%)' },
+					'40%': { transform: 'translate(-5%, 15%)' },
+					'50%': { transform: 'translate(-10%, 5%)' },
+					'60%': { transform: 'translate(15%, 0)' },
+					'70%': { transform: 'translate(0, 10%)' },
+					'80%': { transform: 'translate(-15%, 0)' },
+					'90%': { transform: 'translate(10%, 5%)' },
+					'100%': { transform: 'translate(5%, 0)' },
+				},
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'float': 'float 6s ease-in-out infinite',
 				'pulse-glow': 'pulse-glow 4s ease-in-out infinite',
-				'rotate-slow': 'rotate-slow 20s linear infinite',
-				'glitch': 'glitch 0.5s ease-in-out infinite alternate',
-				'fade-in': 'fade-in 0.6s ease-out',
-				'fade-in-delayed': 'fade-in-delayed 1.2s ease-out',
-				'scale-in': 'scale-in 0.5s ease-out'
-			}
+				'magnetic-move': 'magnetic-move 3s ease-in-out infinite',
+				'text-gradient': 'text-gradient 8s ease infinite',
+				'slow-spin': 'slow-spin 20s linear infinite',
+				'morph-shape': 'morph-shape 8s ease-in-out infinite',
+				'noise-animation': 'noise-animation 1.5s steps(10) infinite',
+			},
+			backgroundImage: {
+				'noise': 'url("/noise.png")',
+			},
+			perspective: {
+				'1000': '1000px',
+				'2000': '2000px',
+			},
+			transformStyle: {
+				'preserve-3d': 'preserve-3d',
+			},
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [
+		require("tailwindcss-animate"),
+		require("@tailwindcss/typography"),
+		function({ addUtilities }) {
+			addUtilities({
+				'.perspective-1000': {
+					'perspective': '1000px',
+				},
+				'.perspective-2000': {
+					'perspective': '2000px',
+				},
+				'.preserve-3d': {
+					'transform-style': 'preserve-3d',
+				},
+			});
+		},
+	],
 } satisfies Config;

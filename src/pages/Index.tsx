@@ -1,43 +1,37 @@
-
 import { useEffect } from "react";
-import AnimatedBackground from "@/components/AnimatedBackground";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import PricingPlans from "@/components/PricingPlans";
 import FeaturesSection from "@/components/FeaturesSection";
 import FaqSection from "@/components/FaqSection";
 import Footer from "@/components/Footer";
+import AnimatedBackground from "@/components/AnimatedBackground";
 
 const Index = () => {
-  // Apply dark background color to the whole page
   useEffect(() => {
-    document.body.classList.add("bg-background");
-    
-    // Preload document with dark mode 
+    // Force dark mode
     document.documentElement.classList.add("dark");
+    document.body.style.backgroundColor = "#0a0a0a";
+    document.body.style.color = "#ffffff";
     
     return () => {
-      document.body.classList.remove("bg-background");
+      document.body.style.backgroundColor = "";
+      document.body.style.color = "";
     };
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col overflow-x-hidden">
-      {/* Background Animation */}
+    <div className="min-h-screen flex flex-col overflow-x-hidden bg-[#0a0a0a] text-white">
+      {/* Background */}
       <AnimatedBackground />
       
       {/* Main Content */}
       <div className="relative z-10 flex-grow">
         <Navbar />
-        
         <HeroSection />
-        
         <PricingPlans />
-        
         <FeaturesSection />
-        
         <FaqSection />
-        
         <Footer />
       </div>
     </div>

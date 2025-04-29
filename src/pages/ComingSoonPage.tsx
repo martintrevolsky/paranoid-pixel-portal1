@@ -2,8 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AnimatedBackground from "@/components/AnimatedBackground";
-import { ArrowLeftIcon } from "lucide-react";
-import { Discord, Telegram } from "lucide-react";
+import { ArrowLeftIcon, MessageSquare, Send } from "lucide-react";
 
 const ComingSoonPage: React.FC = () => {
   return (
@@ -32,7 +31,7 @@ const ComingSoonPage: React.FC = () => {
             size="lg" 
             className="w-full md:w-auto bg-[#5865F2] hover:bg-[#4752c4] gap-2"
           >
-            <Discord className="h-5 w-5" />
+            <MessageSquare className="h-5 w-5" />
             Join Our Discord
           </Button>
           
@@ -40,7 +39,7 @@ const ComingSoonPage: React.FC = () => {
             size="lg" 
             className="w-full md:w-auto bg-[#0088cc] hover:bg-[#0077b5] gap-2"
           >
-            <Telegram className="h-5 w-5" />
+            <Send className="h-5 w-5" />
             Follow on Telegram
           </Button>
         </div>

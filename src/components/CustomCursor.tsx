@@ -1,97 +1,94 @@
+import React, { useEffect, useRef } from 'react';
+import { motion, useSpring, useMotionValue } from 'framer-motion';
 
-import React, { useEffect, useState, useRef } from 'react';
-
-const CustomCursor: React.FC = () => {
-  const cursorDotRef = useRef<HTMLDivElement>(null);
-  const cursorRingRef = useRef<HTMLDivElement>(null);
-  const [isActive, setIsActive] = useState(false);
-  const [isClicking, setIsClicking] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+const CustomCursor = () => {
+  const cursorRef = useRef<HTMLDivElement>(null);
+  const followerRef = useRef<HTMLDivElement>(null);
+  const hoverRef = useRef<HTMLDivElement>(null);
+  
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  
+  const followerX = useSpring(0, { stiffness: 200, damping: 20 });
+  const followerY = useSpring(0, { stiffness: 200, damping: 20 });
+  
+  const hoverX = useSpring(0, { stiffness: 150, damping: 15 });
+  const hoverY = useSpring(0, { stiffness: 150, damping: 15 });
 
   useEffect(() => {
-    const moveCursor = (e: MouseEvent) => {
-      const { clientX, clientY } = e;
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
       
-      if (cursorDotRef.current && cursorRingRef.current) {
-        cursorDotRef.current.style.transform = `translate(${clientX}px, ${clientY}px)`;
-        
-        // Add a slight delay to the ring for a trailing effect
-        setTimeout(() => {
-          if (cursorRingRef.current) {
-            cursorRingRef.current.style.transform = `translate(${clientX}px, ${clientY}px)`;
-          }
-        }, 100);
+      followerX.set(e.clientX);
+      followerY.set(e.clientY);
+      
+      hoverX.set(e.clientX);
+      hoverY.set(e.clientY);
+    };
+
+    const handleMouseOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (target.closest('button') || target.closest('a') || target.closest('[role="button"]')) {
+        document.documentElement.classList.add('cursor-hover');
       }
-      
-      // Show cursor after first movement
-      if (!isVisible) setIsVisible(true);
     };
-    
-    const handleMouseDown = () => setIsClicking(true);
-    const handleMouseUp = () => setIsClicking(false);
-    
-    const handleMouseEnter = () => {
-      setIsActive(true);
-      setIsVisible(true);
+
+    const handleMouseOut = () => {
+      document.documentElement.classList.remove('cursor-hover');
     };
-    
-    const handleMouseLeave = () => {
-      setIsActive(false);
-      setIsVisible(false);
-    };
-    
-    const handleLinkHover = () => {
-      setIsActive(true);
-    };
-    
-    const handleLinkLeave = () => {
-      setIsActive(false);
-    };
-    
-    document.addEventListener('mousemove', moveCursor);
-    document.addEventListener('mousedown', handleMouseDown);
-    document.addEventListener('mouseup', handleMouseUp);
-    document.addEventListener('mouseenter', handleMouseEnter);
-    document.addEventListener('mouseleave', handleMouseLeave);
-    
-    // Add hover effect for links and buttons
-    const links = document.querySelectorAll('a, button');
-    links.forEach(link => {
-      link.addEventListener('mouseenter', handleLinkHover);
-      link.addEventListener('mouseleave', handleLinkLeave);
-    });
-    
+
+    window.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseover', handleMouseOver);
+    document.addEventListener('mouseout', handleMouseOut);
+
+    // Hide default cursor
+    document.documentElement.classList.add('custom-cursor');
+
     return () => {
-      document.removeEventListener('mousemove', moveCursor);
-      document.removeEventListener('mousedown', handleMouseDown);
-      document.removeEventListener('mouseup', handleMouseUp);
-      document.removeEventListener('mouseenter', handleMouseEnter);
-      document.removeEventListener('mouseleave', handleMouseLeave);
-      
-      links.forEach(link => {
-        link.removeEventListener('mouseenter', handleLinkHover);
-        link.removeEventListener('mouseleave', handleLinkLeave);
-      });
+      window.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseover', handleMouseOver);
+      document.removeEventListener('mouseout', handleMouseOut);
+      document.documentElement.classList.remove('custom-cursor');
     };
-  }, [isVisible]);
+  }, []);
 
   return (
     <>
-      <div 
-        ref={cursorDotRef}
-        className={`fixed top-0 left-0 w-2 h-2 bg-primary rounded-full pointer-events-none z-50 transition-transform will-change-transform ${
-          isVisible ? 'opacity-100' : 'opacity-0'
-        } ${isClicking ? 'scale-0' : 'scale-100'}`}
-        style={{ transform: 'translate(-50%, -50%)' }}
+      {/* Main cursor dot */}
+      <motion.div
+        ref={cursorRef}
+        className="fixed pointer-events-none z-[9999] w-1.5 h-1.5 bg-white rounded-full mix-blend-difference"
+        style={{
+          x: mouseX,
+          y: mouseY,
+          translateX: '-50%',
+          translateY: '-50%'
+        }}
       />
-      <div 
-        ref={cursorRingRef}
-        className={`fixed top-0 left-0 w-6 h-6 border-2 border-primary rounded-full pointer-events-none z-50 transition-transform will-change-transform ${
-          isVisible ? 'opacity-100' : 'opacity-0'
-        } ${isActive ? 'w-12 h-12 border-accent' : ''} ${
-          isClicking ? 'w-4 h-4 border-accent' : ''
-        }`}
-        style={{ transform: 'translate(-50%, -50%)' }}
+
+      {/* Follower ring */}
+      <motion.div
+        ref={followerRef}
+        className="fixed pointer-events-none z-[9998] w-8 h-8 rounded-full border border-white/50 mix-blend-difference"
+        style={{
+          x: followerX,
+          y: followerY,
+          translateX: '-50%',
+          translateY: '-50%'
+        }}
+      />
+
+      {/* Hover effect */}
+      <motion.div
+        ref={hoverRef}
+        className="fixed pointer-events-none z-[9997] w-16 h-16 rounded-full bg-white/10 opacity-0 scale-0 transition-all duration-300 ease-out cursor-hover:opacity-100 cursor-hover:scale-100"
+        style={{
+          x: hoverX,
+          y: hoverY,
+          translateX: '-50%',
+          translateY: '-50%'
+        }}
       />
     </>
   );

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CheckIcon, XIcon } from "lucide-react";
+import { motion } from 'framer-motion';
+import { Check } from 'lucide-react';
 
 type PlanType = "monthly" | "yearly" | "payu";
 
@@ -9,197 +11,148 @@ const PricingPlans: React.FC = () => {
   
   const plans = [
     {
-      name: "Personal",
-      description: "Perfect for individuals needing occasional privacy",
-      monthlyPrice: "X$",
-      yearlyPrice: "XX$",
-      payuPrice: "X$/use",
-      features: [
-        "1 temporary number at a time",
-        "30 days number lifetime",
-        "5 calls per day",
-        "10 SMS per day",
-        "Basic customer support",
-        "Number from 10 countries"
-      ],
-      notIncluded: [
-        "Premium country codes",
-        "Number customization",
-        "Priority support"
-      ],
-      popular: false,
-      gradient: "from-primary/80 to-accent/80"
+      name: 'UK Plan',
+      price: '15€',
+      period: 'month',
+      features: ['Unlimited SMS Incoming', 'Non-VOIP Number', 'Verification Ready'],
+      comingSoon: ['Calls', 'Outgoing SMS'],
+      highlight: false,
     },
     {
-      name: "Business",
-      description: "Ideal for professionals and small teams",
-      monthlyPrice: "XX$",
-      yearlyPrice: "XXX$",
-      payuPrice: "XX$/use",
-      features: [
-        "5 temporary numbers at a time",
-        "90 days number lifetime",
-        "Unlimited calls",
-        "Unlimited SMS",
-        "Priority support",
-        "Number from 50 countries",
-        "Number customization",
-        "Premium country codes"
-      ],
-      notIncluded: [
-        "Full anonymity protocol",
-        "Dedicated account manager"
-      ],
-      popular: true,
-      gradient: "from-primary to-accent"
+      name: 'US Plan',
+      price: '$20',
+      period: 'month',
+      features: ['Unlimited SMS Incoming', 'Non-VOIP Number', 'Verification Ready'],
+      comingSoon: ['Calls', 'Outgoing SMS'],
+      highlight: true,
     },
     {
-      name: "Custom",
-      description: "Advanced solutions for organizations with specific needs",
-      monthlyPrice: null,
-      yearlyPrice: null,
-      payuPrice: null,
-      customPrice: "Contact Us",
-      features: [
-        "Unlimited temporary numbers",
-        "Custom number lifetime",
-        "Unlimited calls & SMS",
-        "Dedicated account manager",
-        "Custom integration options",
-        "Global number access",
-        "Full anonymity protocol",
-        "Enterprise-grade security"
-      ],
-      notIncluded: [],
-      popular: false,
-      gradient: "from-accent/80 to-primary/80"
-    }
+      name: 'European Plan',
+      price: '10€',
+      period: 'month',
+      features: ['Unlimited SMS Incoming', 'Non-VOIP Number', 'Verification Ready'],
+      comingSoon: ['Calls', 'Outgoing SMS'],
+      highlight: false,
+    },
+  ];
+
+  const yearlyPlans = [
+    {
+      name: 'US Yearly',
+      price: '$99.99',
+      period: 'year',
+      features: ['Unlimited SMS Incoming', 'Non-VOIP Number', 'Verification Ready'],
+      comingSoon: ['Calls', 'Outgoing SMS'],
+      highlight: true,
+    },
+    {
+      name: 'UK Yearly',
+      price: '99.99€',
+      period: 'year',
+      features: ['Unlimited SMS Incoming', 'Non-VOIP Number', 'Verification Ready'],
+      comingSoon: ['Calls', 'Outgoing SMS'],
+      highlight: false,
+    },
+    {
+      name: 'European Yearly',
+      price: '99.99€',
+      period: 'year',
+      features: ['Unlimited SMS Incoming', 'Non-VOIP Number', 'Verification Ready'],
+      comingSoon: ['Calls', 'Outgoing SMS'],
+      highlight: false,
+    },
   ];
 
   return (
-    <section id="pricing" className="py-20">
+    <section className="py-20 relative overflow-hidden">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            Choose Your Paranoia Level
-          </h2>
-          <p className="text-lg text-foreground/80 max-w-2xl mx-auto">
-            Select the right plan for your privacy needs. All plans include our core paranoid protection features.
-          </p>
-          
-          {/* Pricing Toggle */}
-          <div className="mt-8 inline-flex items-center p-1 bg-secondary rounded-full">
-            <button
-              onClick={() => setPlanType("monthly")}
-              className={`py-2 px-4 rounded-full transition-all ${
-                planType === "monthly"
-                  ? "bg-primary text-white shadow-lg"
-                  : "text-foreground/70 hover:text-foreground"
-              }`}
-            >
-              Monthly
-            </button>
-            <button
-              onClick={() => setPlanType("yearly")}
-              className={`py-2 px-4 rounded-full transition-all ${
-                planType === "yearly"
-                  ? "bg-primary text-white shadow-lg"
-                  : "text-foreground/70 hover:text-foreground"
-              }`}
-            >
-              Yearly
-              <span className="ml-2 text-xs py-0.5 px-2 bg-accent text-white rounded-full">
-                Save 15%
-              </span>
-            </button>
-            <button
-              onClick={() => setPlanType("payu")}
-              className={`py-2 px-4 rounded-full transition-all ${
-                planType === "payu"
-                  ? "bg-primary text-white shadow-lg"
-                  : "text-foreground/70 hover:text-foreground"
-              }`}
-            >
-              Pay as you go
-            </button>
-          </div>
-        </div>
-        
-        {/* Plan Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl font-bold mb-4">Monthly Plans</h2>
+          <p className="text-muted-foreground">All numbers are non-VOIP and can be used for verifications</p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
           {plans.map((plan, index) => (
-            <div
-              key={index}
-              className={`relative rounded-xl overflow-hidden transition-all duration-300 hover:scale-105 ${
-                plan.popular ? "transform scale-105 z-10" : ""
+            <motion.div
+              key={plan.name}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: index * 0.2 }}
+              className={`relative p-8 rounded-lg ${
+                plan.highlight
+                  ? 'bg-primary/10 border-2 border-primary'
+                  : 'bg-card'
               }`}
             >
-              {/* Card Background with Gradient Border */}
-              <div className="absolute inset-0 bg-gradient-to-br opacity-30 animate-pulse-glow" style={{background: `linear-gradient(to bottom right, hsl(var(--primary)), hsl(var(--accent)))`}}></div>
-              
-              {/* Popular Badge */}
-              {plan.popular && (
-                <div className="absolute top-0 right-0 bg-accent text-white text-xs font-bold py-1 px-3 rounded-bl-lg">
-                  Most Popular
+              <h3 className="text-2xl font-bold mb-4">{plan.name}</h3>
+              <div className="mb-6">
+                <span className="text-4xl font-bold">{plan.price}</span>
+                <span className="text-muted-foreground">/{plan.period}</span>
+              </div>
+              <ul className="space-y-4 mb-6">
+                {plan.features.map((feature) => (
+                  <li key={feature} className="flex items-center">
+                    <Check className="w-5 h-5 text-primary mr-2" />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+              {plan.comingSoon.length > 0 && (
+                <div className="text-sm text-muted-foreground">
+                  Coming soon: {plan.comingSoon.join(', ')}
                 </div>
               )}
-              
-              <div className="relative p-6 bg-card border border-border/50 h-full rounded-xl flex flex-col">
-                <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
-                <p className="text-foreground/70 mb-4">{plan.description}</p>
-                
-                <div className="mb-6">
-                  {plan.customPrice ? (
-                    <div className="text-3xl font-bold">{plan.customPrice}</div>
-                  ) : (
-                    <>
-                      <div className="text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                        {planType === "monthly" 
-                          ? plan.monthlyPrice 
-                          : planType === "yearly" 
-                            ? plan.yearlyPrice
-                            : plan.payuPrice}
-                      </div>
-                      <div className="text-foreground/60 text-sm">
-                        {planType === "monthly" ? "per month" : planType === "yearly" ? "per year" : "per usage"}
-                      </div>
-                    </>
-                  )}
-                </div>
-                
-                <Link to="/coming-soon">
-                  <Button className={`mb-6 w-full bg-gradient-to-r ${plan.gradient} hover:opacity-90`}>
-                    Coming Soon!
-                  </Button>
-                </Link>
-                
-                <div className="space-y-4 flex-grow">
-                  <div className="font-medium">Includes:</div>
-                  <ul className="space-y-2">
-                    {plan.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-start">
-                        <CheckIcon size={18} className="text-primary mr-2 mt-0.5 flex-shrink-0" />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  
-                  {plan.notIncluded.length > 0 && (
-                    <>
-                      <div className="font-medium mt-4">Not included:</div>
-                      <ul className="space-y-2">
-                        {plan.notIncluded.map((feature, idx) => (
-                          <li key={idx} className="flex items-start text-foreground/60">
-                            <XIcon size={18} className="text-muted-foreground mr-2 mt-0.5 flex-shrink-0" />
-                            <span>{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </>
-                  )}
-                </div>
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl font-bold mb-4">Yearly Plans</h2>
+          <p className="text-muted-foreground">Save big with our yearly subscription plans</p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {yearlyPlans.map((plan, index) => (
+            <motion.div
+              key={plan.name}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: index * 0.2 }}
+              className={`relative p-8 rounded-lg ${
+                plan.highlight
+                  ? 'bg-primary/10 border-2 border-primary'
+                  : 'bg-card'
+              }`}
+            >
+              <h3 className="text-2xl font-bold mb-4">{plan.name}</h3>
+              <div className="mb-6">
+                <span className="text-4xl font-bold">{plan.price}</span>
+                <span className="text-muted-foreground">/{plan.period}</span>
               </div>
-            </div>
+              <ul className="space-y-4 mb-6">
+                {plan.features.map((feature) => (
+                  <li key={feature} className="flex items-center">
+                    <Check className="w-5 h-5 text-primary mr-2" />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+              {plan.comingSoon.length > 0 && (
+                <div className="text-sm text-muted-foreground">
+                  Coming soon: {plan.comingSoon.join(', ')}
+                </div>
+              )}
+            </motion.div>
           ))}
         </div>
       </div>
