@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import ComingSoonPage from "./pages/ComingSoonPage";
 import CustomCursor from "./components/CustomCursor";
 import LoadingScreen from "./components/LoadingScreen";
 
@@ -48,6 +49,7 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/coming-soon" element={<ComingSoonPage />} />
             {/* Placeholder routes for future pages */}
             <Route path="/pricing" element={<Index />} />
             <Route path="/features" element={<Index />} />
