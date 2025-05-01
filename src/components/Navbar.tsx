@@ -113,7 +113,7 @@ const Navbar = () => {
               </Button>
               <Link to="/coming-soon" onClick={() => setIsMobileMenuOpen(false)}>
                 <Button className="justify-start w-full">
-                  Dashboard!
+                  Dashboard
                 </Button>
               </Link>
             </div>
