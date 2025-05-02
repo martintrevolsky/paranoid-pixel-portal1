@@ -75,7 +75,7 @@ const Navbar = () => {
           </Button>
           <Link to="/coming-soon">
             <Button size="sm" className="animate-pulse-glow">
-              Coming Soon!
+              Dashboard
             </Button>
           </Link>
         </div>
