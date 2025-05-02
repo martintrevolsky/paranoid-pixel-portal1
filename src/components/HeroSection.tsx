@@ -53,9 +53,9 @@ const HeroSection: React.FC = () => {
                 Secure Your Digital
               </span>
               <br className="hidden sm:block" />
-              <span className="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
-                Identity
-              </span>
+              <span className="block sm:inline bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent mt-2 sm:mt-0">
+  Identity
+</span>
             </motion.h1>
             
             <motion.p
