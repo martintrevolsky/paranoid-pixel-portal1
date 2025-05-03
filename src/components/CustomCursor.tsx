@@ -1,7 +1,15 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, useSpring, useMotionValue } from 'framer-motion';
 
+const isTouchDevice = () => {
+  return (
+    typeof window !== 'undefined' &&
+    ('ontouchstart' in window || navigator.maxTouchPoints > 0)
+  );
+};
+
 const CustomCursor = () => {
+  const [isMobile, setIsMobile] = useState(false);
   const cursorRef = useRef<HTMLDivElement>(null);
   const followerRef = useRef<HTMLDivElement>(null);
   const hoverRef = useRef<HTMLDivElement>(null);
@@ -16,6 +24,9 @@ const CustomCursor = () => {
   const hoverY = useSpring(0, { stiffness: 150, damping: 15 });
 
   useEffect(() => {
+    setIsMobile(isTouchDevice());
+    if (isTouchDevice()) return;
+
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
@@ -52,6 +63,8 @@ const CustomCursor = () => {
       document.documentElement.classList.remove('custom-cursor');
     };
   }, []);
+
+  if (isMobile) return null;
 
   return (
     <>
