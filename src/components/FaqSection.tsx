@@ -23,6 +23,42 @@ const faqs = [
     question: "Can I port my existing number?",
     answer: "Currently, we don't support number porting. All numbers are provided by us and cannot be transferred from other providers.",
   },
+  // Tier 1 FAQ
+  {
+    question: <span id="faq-tier1">What are Tier 1 apps and how does pricing work?</span>,
+    answer: (
+      <span>
+        <b>Tier 1</b> includes top-tier platforms like <b>WhatsApp, Telegram, PayPal, Google</b> with advanced verification systems.<br/>
+        <b>Price:</b> <span className="text-primary font-bold">1.5 EUR / OTP</span><br/>
+        <b>Preferred countries:</b> UK, US (+30%), Austria, Denmark<br/>
+        <b>Guarantee:</b> Preferred country tier guarantees number support and refund if it doesn't work. Otherwise, no guarantee.<br/>
+      </span>
+    ),
+  },
+  // Tier 2 FAQ
+  {
+    question: <span id="faq-tier2">What are Tier 2 apps and how does pricing work?</span>,
+    answer: (
+      <span>
+        <b>Tier 2</b> covers apps with lots of users, like <b>Instagram, YouTube, TikTok</b>.<br/>
+        <b>Price:</b> <span className="text-primary font-bold">1 EUR / OTP</span><br/>
+        <b>Preferred countries:</b> Poland, UK<br/>
+        <b>Guarantee:</b> Preferred country tier guarantees number support and refund if it doesn't work. Otherwise, no guarantee.<br/>
+      </span>
+    ),
+  },
+  // Tier 3 FAQ
+  {
+    question: <span id="faq-tier3">What are Tier 3 apps and how does pricing work?</span>,
+    answer: (
+      <span>
+        <b>Tier 3</b> includes all other apps.<br/>
+        <b>Price:</b> <span className="text-primary font-bold">0.89 EUR / OTP</span><br/>
+        <b>Preferred country:</b> Poland<br/>
+        <b>Guarantee:</b> Preferred country tier guarantees number support and refund if it doesn't work. Otherwise, no guarantee.<br/>
+      </span>
+    ),
+  },
 ];
 
 export default function FaqSection() {
